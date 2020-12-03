@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,20 +6,91 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  TouchableHighlight,
 } from "react-native";
 
 export default function App() {
+  const [weight, setweight] = useState(0);
+  const [height, setheight] = useState(0);
+  const weightadd = () => {
+    setweight(weight + 1);
+  };
+  const weightsub = () => {
+    if (weight >= 1) {
+      setweight(weight - 1);
+    }
+  };
+  const heightadd = () => {
+    setheight(height + 1);
+  };
+  const heightsub = () => {
+    if (height >= 1) {
+      setheight(height - 1);
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.txt}>BMI </Text>
-      <View style={styles.in}>
-        <TextInput style={styles.weight} placeholder="Weight" />
-        <TextInput style={styles.height} placeholder="Height" />
-        <TouchableOpacity
-          style={{ height: "100%", width: "100%", alignItems: "center" }}
-        >
-          <Text style={styles.cal}>Calculate</Text>
-        </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.title}>BMI</Text>
+      </View>
+      <View style={{ flex: 2 }}>
+        <View style={styles.area1}>
+          <TouchableOpacity
+            onPress={() => {
+              weightsub();
+            }}
+          >
+            <Text style={styles.txtstyle}>-</Text>
+          </TouchableOpacity>
+          <Text
+            style={{
+              ...styles.txtstyle,
+              color: "black",
+              paddingHorizontal: 30,
+            }}
+          >
+            {weight}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              weightadd();
+            }}
+          >
+            <Text style={styles.txtstyle}>+</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.area2}>
+          <TouchableOpacity
+            onPress={() => {
+              heightsub();
+            }}
+          >
+            <Text style={styles.txtstyle}>-</Text>
+          </TouchableOpacity>
+          <Text
+            style={{
+              ...styles.txtstyle,
+              color: "black",
+              paddingHorizontal: 30,
+            }}
+          >
+            {height}
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              heightadd();
+            }}
+          >
+            <Text style={styles.txtstyle}>+</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.area3}>
+          <TouchableOpacity>
+            <Text style={styles.txtcal}>Calculate</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -33,42 +104,29 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: StatusBar.currentHeight,
   },
-  txt: {
-    flex: 1,
-    textAlign: "center",
-    textAlignVertical: "center",
-    fontSize: 60,
+  area1: {
+    flexDirection: "row",
+    alignSelf: "center",
   },
-  in: {
-    flex: 1.5,
-    width: "100%",
-    alignItems: "center",
+  area2: {
+    flexDirection: "row",
   },
-  weight: {
-    height: "12%",
-    width: "90%",
-    backgroundColor: "white",
-    margin: 10,
-    textAlign: "center",
-    borderRadius: 30,
+  txtstyle: {
+    fontSize: 100,
+    color: "red",
+    fontWeight: "bold",
   },
-  height: {
-    height: "12%",
-    width: "90%",
-    backgroundColor: "white",
-    margin: 10,
-    textAlign: "center",
-    borderRadius: 30,
+  title: {
+    fontSize: 80,
+    paddingTop: 50,
   },
-  cal: {
-    height: "12%",
-    width: "50%",
-    backgroundColor: "#e81e1e",
-    marginTop: 50,
-    textAlign: "center",
-    textAlignVertical: "center",
-    borderRadius: 30,
-    fontSize: 25,
+  txtcal: {
+    fontSize: 40,
     color: "white",
+    backgroundColor: "red",
+    textAlign: "center",
+    textAlignVertical: "center",
+    borderRadius: 20,
+    marginTop: 100,
   },
 });
