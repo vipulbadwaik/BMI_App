@@ -8,16 +8,18 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   TouchableHighlight,
+  Modal,
 } from "react-native";
 
 export default function App() {
-  const [weight, setweight] = useState(0);
-  const [height, setheight] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [weight, setweight] = useState(1);
+  const [height, setheight] = useState(1);
   const weightadd = () => {
     setweight(weight + 1);
   };
   const weightsub = () => {
-    if (weight >= 1) {
+    if (weight >= 2) {
       setweight(weight - 1);
     }
   };
@@ -25,13 +27,25 @@ export default function App() {
     setheight(height + 1);
   };
   const heightsub = () => {
-    if (height >= 1) {
+    if (height >= 2) {
       setheight(height - 1);
     }
   };
 
   return (
     <View style={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View>
+          <Text>Your BMI is = </Text>
+        </View>
+      </Modal>
       <View style={{ flex: 1 }}>
         <Text style={styles.title}>BMI</Text>
       </View>
@@ -49,6 +63,8 @@ export default function App() {
               ...styles.txtstyle,
               color: "black",
               paddingHorizontal: 30,
+              width: "50%",
+              textAlign: "center",
             }}
           >
             {weight}
@@ -74,6 +90,8 @@ export default function App() {
               ...styles.txtstyle,
               color: "black",
               paddingHorizontal: 30,
+              width: "50%",
+              textAlign: "center",
             }}
           >
             {height}
@@ -110,6 +128,7 @@ const styles = StyleSheet.create({
   },
   area2: {
     flexDirection: "row",
+    alignSelf: "center",
   },
   txtstyle: {
     fontSize: 100,
