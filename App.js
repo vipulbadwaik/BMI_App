@@ -32,6 +32,22 @@ export default function App() {
     }
   };
 
+  const [bmi, setbmi] = useState(1);
+  const [result, setresult] = useState();
+  const calculatebmi = (a, b) => {
+    setbmi(a / (b * b));
+    const c = bmi;
+    if (c < 18.5) {
+      setresult("Underweight");
+    } else if (c > 18.5 && c < 25) {
+      setresult("Normal Weight");
+    } else if (c >= 25 && c < 30) {
+      setresult("Overweight");
+    } else {
+      setresult("Obesity");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -42,12 +58,20 @@ export default function App() {
           Alert.alert("Modal has been closed.");
         }}
       >
-        <View>
-          <Text>Your BMI is = </Text>
+        <View style={styles.modalstyle}>
+          <Text
+            style={styles.modaltext}
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            Your BMI = {bmi}
+          </Text>
+          <Text style={styles.modaltext1}>{result}</Text>
         </View>
       </Modal>
       <View style={{ flex: 1 }}>
-        <Text style={styles.title}>BMI</Text>
+        <Text style={styles.title}>BMI Calculator</Text>
       </View>
       <View style={{ flex: 2 }}>
         <View style={styles.area1}>
@@ -106,7 +130,15 @@ export default function App() {
         </View>
         <View style={styles.area3}>
           <TouchableOpacity>
-            <Text style={styles.txtcal}>Calculate</Text>
+            <Text
+              style={styles.txtcal}
+              onPress={() => {
+                setModalVisible(true);
+                calculatebmi(weight, height);
+              }}
+            >
+              Calculate
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -136,8 +168,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   title: {
-    fontSize: 80,
+    fontSize: 70,
     paddingTop: 50,
+    textAlign: "center",
+    textShadowColor: "red",
+    textShadowRadius: 15,
   },
   txtcal: {
     fontSize: 40,
@@ -147,5 +182,32 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     borderRadius: 20,
     marginTop: 100,
+  },
+  modalstyle: {
+    height: "15%",
+    width: "82%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    alignSelf: "center",
+    marginTop: "125%",
+  },
+  modaltext: {
+    textAlign: "center",
+    fontSize: 30,
+    flex: 1,
+    backgroundColor: "#4a8cf0",
+    color: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  modaltext1: {
+    fontSize: 40,
+    textAlign: "center",
+    backgroundColor: "#4a8cf0",
+    flex: 1,
+    color: "white",
+    fontWeight: "bold",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
 });
